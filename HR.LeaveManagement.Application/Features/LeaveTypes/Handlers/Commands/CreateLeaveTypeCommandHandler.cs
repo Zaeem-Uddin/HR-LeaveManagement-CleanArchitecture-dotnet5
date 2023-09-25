@@ -41,6 +41,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveTypes.Handlers.Commands
             else
             {
                 var leaveType = _mapper.Map<LeaveType>(request.LeaveTypeDto);
+                leaveType.DateCreated = DateTime.UtcNow;
 
                 leaveType = await _unitOfWork.LeaveTypeRepository.Add(leaveType);
                 await _unitOfWork.Save();

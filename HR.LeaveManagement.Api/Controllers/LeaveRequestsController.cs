@@ -47,8 +47,17 @@ namespace HR.LeaveManagement.Api.Controllers
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateLeaveRequestDto leaveRequest)
         {
             var command = new CreateLeaveRequestCommand { LeaveRequestDto = leaveRequest };
-            var repsonse = await _mediator.Send(command);
-            return Ok(repsonse);
+
+            try
+            {
+                var response = await _mediator.Send(command);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions appropriately, e.g., log the error and return an error response.
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         // PUT api/<LeaveRequestsController>/5
